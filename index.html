@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>imyour_eraa | Hacker Pro</title>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace; /* Hacker style font */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* КЕРЕМЕТ ХАКЕР BACKGROUND */
+        #hacker-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .main-card {
+            position: relative;
+            width: 360px;
+            height: 680px;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+
+        /* ФОТО ХҮРЭЭ - GLOW FRAME */
+        .photo-frame {
+            position: relative;
+            margin: 25px auto;
+            width: 85%;
+            height: 50%;
+            border-radius: 20px;
+            padding: 5px; /* Хүрээний зузаан */
+            background: linear-gradient(45deg, #fff, #333, #fff, #333);
+            background-size: 400% 400%;
+            animation: border-glow 5s ease infinite;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes border-glow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            filter: contrast(1.1);
+        }
+
+        /* Нэрний эффект */
+        .name-title {
+            font-size: 1.7rem;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 6px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 10px #fff;
+        }
+
+        .btn-container {
+            padding: 0 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .app-btn {
+            text-decoration: none;
+            color: #fff;
+            padding: 14px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        /* Mouse очход өөрчлөгдөх өнгөнүүд */
+        .btn-insta:hover { background: #d6249f; box-shadow: 0 0 20px #d6249f; transform: translateY(-3px); }
+        .btn-fb:hover { background: #1877F2; box-shadow: 0 0 20px #1877F2; transform: translateY(-3px); }
+        .btn-tiktok:hover { background: #000; border-color: #fe2c55; box-shadow: 3px 3px 0px #fe2c55, -3px -3px 0px #25f4ee; transform: translateY(-3px); }
+
+        /* Rotate / Landscape */
+        @media (orientation: landscape) {
+            .main-card { width: 650px; height: 350px; flex-direction: row; }
+            .photo-frame { width: 40%; height: 85%; margin: auto 20px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="hacker-canvas"></canvas>
+
+    <div class="main-card" data-aos="flip-left" data-aos-duration="1500">
+        <div class="photo-frame">
+            <img src="unnamed.jpg" alt="Eraa Photo">
+        </div>
+
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 20px;">
+            <div class="name-title">imyour_eraa</div>
+            
+            <div class="btn-container">
+                <a href="https://www.instagram.com/imyour_eraa" target="_blank" class="app-btn btn-insta">
+                    <i class="fab fa-instagram"></i> INSTAGRAM
+                </a>
+                <a href="https://www.facebook.com/share/184CGWDFGV" target="_blank" class="app-btn btn-fb">
+                    <i class="fab fa-facebook-f"></i> FACEBOOK
+                </a>
+                <a href="https://www.tiktok.com/@imyour__eraa" target="_blank" class="app-btn btn-tiktok">
+                    <i class="fab fa-tiktok"></i> TIKTOK
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        // MATRIX HACKER BACKGROUND ANIMATION
+        const canvas = document.getElementById('hacker-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = "imyour_eraa010101<>{}[]+=-*^%$#@!";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Зөөлөн арилна
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#fff"; // Цагаан өнгөтэй хакер код
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = katakana.charAt(Math.floor(Math.random() * katakana.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 35);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
